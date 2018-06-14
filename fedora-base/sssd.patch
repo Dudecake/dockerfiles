@@ -1,0 +1,48 @@
+diff -Naur /etc/pam.d/password-auth /etc/pam.d.bak/password-auth
+--- /etc/pam.d/password-auth	2018-05-12 12:20:58.763295754 +0000
++++ /etc/pam.d.bak/password-auth	2018-02-08 18:17:56.000000000 +0000
+@@ -3,15 +3,12 @@
+ # User changes will be destroyed the next time authconfig is run.
+ auth        required      pam_env.so
+ auth        sufficient    pam_unix.so try_first_pass nullok
++auth        sufficient    pam_sss.so use_first_pass
+ auth        required      pam_deny.so
+ 
+ account     required      pam_unix.so
++account     [default=bad success=ok user_unknown=ignore] pam_sss.so
+ 
+ password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type=
+ password    sufficient    pam_unix.so try_first_pass use_authtok nullok sha512 shadow
++password    sufficient    pam_sss.so use_authtok
+ password    required      pam_deny.so
+ 
+ session     optional      pam_keyinit.so revoke
+@@ -19,4 +16,3 @@
+ -session     optional      pam_systemd.so
+ session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
+ session     required      pam_unix.so
++session     optional      pam_sss.so
+diff -Naur /etc/pam.d/system-auth /etc/pam.d.bak/system-auth
+--- /etc/pam.d/system-auth	2018-05-12 12:19:52.400050985 +0000
++++ /etc/pam.d.bak/system-auth	2018-02-08 18:17:56.000000000 +0000
+@@ -3,15 +3,12 @@
+ # User changes will be destroyed the next time authconfig is run.
+ auth        required      pam_env.so
+ auth        sufficient    pam_unix.so try_first_pass nullok
++auth        sufficient    pam_sss.so use_first_pass
+ auth        required      pam_deny.so
+ 
+ account     required      pam_unix.so
++account     [default=bad success=ok user_unknown=ignore] pam_sss.so
+ 
+ password    requisite     pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type=
+ password    sufficient    pam_unix.so try_first_pass use_authtok nullok sha512 shadow
++password    sufficient    pam_sss.so use_authtok
+ password    required      pam_deny.so
+ 
+ session     optional      pam_keyinit.so revoke
+@@ -19,4 +16,3 @@
+ -session     optional      pam_systemd.so
+ session     [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
+ session     required      pam_unix.so
++session     optional      pam_sss.so
