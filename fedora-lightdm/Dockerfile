@@ -1,4 +1,4 @@
-FROM ckoomen.eu/fedora-base
+FROM ckoomen.eu/ckoomen/fedora-base
 
 ENV NAME=fedora-lightdm VERSION=0 RELEASE=1
 
