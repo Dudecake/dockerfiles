@@ -1,18 +1,14 @@
 # Fedora-i3
 
-This docker container runs lightdm and i3. It is based on Fedora 27 and on CoreOS requires some setup with users. On Fedora Server it should run without ussues.
+This docker container runs i3.
+
+## Usage
 
 ```bash
-docker run --privileged --rm --mount type=bind,source=/home,target=/home --mount type=bind,source=/run/docker.sock,target=/run/docker.sock --mount type=bind,source=/lib/modules/$(uname -r),target=/lib/modules/$(uname -r) --mount type=bind,source=/etc/group,target=/etc/group,readonly --mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly --mount type=bind,source=/etc/shadow,target=/etc/shadow,readonly --mount type=bind,source=/etc/sudoers.d,target=/etc/sudoers.d,readonly --mount type=bind,source=/etc/machine-id,target=/etc/machine-id,readonly ckoomen.eu:5000/fedora-i3:0.6
-
+docker run --rm --env-file <(env) --user=${USER} --ipc $(docker inspect $(grep -o -e "docker-.*.scope" /proc/self/cgroup | head -n 1 | sed "s/docker-\(.*\).scope/\\1/") --format '{{.Name}}'| sed 's/^.//g') --network host $([[ -d /dev/dri ]] && echo "--device=/dev/dri:/dev/dri") --mount source=dbus-volume,target=/run/dbus --mount source=xdg-runtime,target=/run/user --mount source=lightdm-runtime,target=/run/lightdm --mount source=lightdm-data,target=/var/lib/lightdm-data --mount source=x11-volume,target=/tmp/.X11-unix --mount source=ice-volume,target=/tmp/.ICE-unix --mount type=bind,source=/home,target=/home --mount type=bind,source=/run/user,target=/run/user --mount type=bind,source=/etc/wpa_supplicant,target=/etc/wpa_supplicant --mount type=bind,source=/run/docker.sock,target=/run/docker.sock --mount type=bind,source=/lib/modules/$(uname -r),target=/lib/modules/$(uname -r) --mount type=bind,source=/etc/group,target=/etc/group,readonly --mount type=bind,source=/etc/passwd,target=/etc/passwd,readonly --mount type=bind,source=/etc/shadow,target=/etc/shadow,readonly --mount type=bind,source=/etc/sudoers.d,target=/etc/sudoers.d,readonly --mount type=bind,source=/etc/sssd,target=/etc/sssd,readonly --mount type=bind,source=/etc/machine-id,target=/etc/machine-id,readonly ckoomen/fedora-i3
 ```
 
-## TODO
-
-- Make container unprivileged
-- Passthrough a subset of devices with `--device`
-- Maybe extract lightdm to its own image and let the user create `.desktop` entries under `/usr/share/xsessions` and/or `wayland-sessions`
-
 ## Disclaimer
-This container requires that the host does not run X
+
+This container requires that the host runs X
 This container has been known to kick puppies and eat data. Keep out of reach of children and pets.
