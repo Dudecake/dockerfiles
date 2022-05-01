@@ -2,6 +2,8 @@ FROM archlinux:latest
 
 VOLUME /pkgs
 
+ENV AUR_PAGER=true
+
 RUN pacman -Syu --noconfirm --needed base-devel jq pacutils git expect && \
     ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
     useradd -m -G wheel aurutils && \
