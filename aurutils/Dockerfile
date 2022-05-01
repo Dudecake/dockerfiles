@@ -2,7 +2,7 @@ FROM archlinux:latest
 
 VOLUME /pkgs
 
-RUN pacman -Syu --noconfirm --needed base-devel jq pacutils git wget shellcheck vim vifm devtools bash-completion man-db man-pages expect && \
+RUN pacman -Syu --noconfirm --needed base-devel jq pacutils git expect && \
     ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
     useradd -m -G wheel aurutils && \
     echo aurutils:aurutils | chpasswd && \
