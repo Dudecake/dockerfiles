@@ -4,6 +4,12 @@ RUN zypper addrepo -p120 https://download.opensuse.org/repositories/home:dudecak
     zypper addrepo -p120 https://download.opensuse.org/repositories/security:idm/openSUSE_Tumbleweed/security:idm.repo && \
     zypper addrepo -p120 https://download.opensuse.org/repositories/security/openSUSE_Tumbleweed/security.repo && \
     zypper addrepo -p120 https://download.opensuse.org/repositories/shells:zsh-users:zsh-syntax-highlighting/openSUSE_Tumbleweed/shells:zsh-users:zsh-syntax-highlighting.repo && \
+    zypper addlock kernel-vanilla\* kernel-source-vanilla\* && \
     zypper --gpg-auto-import-keys refresh && \
-    zypper install -y --force-resolution patterns-microos-base-zypper patterns-microos-hardware patterns-microos-selinux patterns-dudecake-base && \
+    zypper install -y --force-resolution \
+        patterns-microos-base-zypper \
+        patterns-microos-hardware \
+        sdbootutil-snapper \
+        sdbootutil-rpm-scriptlets \
+        patterns-dudecake-base-minimal && \
     zypper clean -a
