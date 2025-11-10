@@ -20,7 +20,6 @@ RUN zypper addrepo -p120 https://download.opensuse.org/repositories/editors/open
 
 RUN zypper addrepo -p120 https://download.opensuse.org/repositories/Emulators/openSUSE_Tumbleweed/Emulators.repo && \
     zypper addrepo -p120 https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/games.repo && \
-    echo -e '[vscode]\nname=Visual Studio Code\nenabled=1\nautorefresh=1\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc\npriority=120' > /etc/zypp/repos.d/vscode.repo && \
     zypper --gpg-auto-import-keys refresh && \
     zypper install -y --force-resolution \
         patterns-microos-desktop-kde \
