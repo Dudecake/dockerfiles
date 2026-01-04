@@ -1,9 +1,12 @@
 ARG VERSION=latest
 
-FROM localhost.localdomain/opensuse-base:${VERSION}
+FROM localhost.localdomain/microos-base:${VERSION}
 
 RUN zypper install -y patterns-dudecake-hw-accel && \
     zypper clean -a
+
+#ARG ZED_VERSION=0.211.6
+#ARG ZED_ARCH=x86_64
 
 RUN zypper addrepo -fp120 https://download.opensuse.org/repositories/home:cloud-hypervisor/openSUSE_Tumbleweed/home:cloud-hypervisor.repo && \
     echo -e '[virtio-win-latest]\nname=Latest virtio-win builds\nenabled=1\nautorefresh=1\nbaseurl=http://fedorapeople.org/groups/virt/virtio-win/repo/latest\ngpgcheck=0\npriority=120' > /etc/zypp/repos.d/virtio-win-latest.repo && \
@@ -17,6 +20,8 @@ RUN zypper addrepo -fp120 https://download.opensuse.org/repositories/editors/ope
     zypper --gpg-auto-import-keys refresh && \
     zypper install -y --force-resolution patterns-dudecake-desktop-applications ghostty && \
     zypper clean -a
+
+#RUN curl -L https://github.com/zed-industries/zed/releases/download/v${ZED_VERSION}/zed-linux-${ZED_ARCH}.tar.gz | tar -C /opt -xzf -
 
 RUN zypper addrepo -fp120 https://download.opensuse.org/repositories/Emulators/openSUSE_Tumbleweed/Emulators.repo && \
     zypper addrepo -fp120 https://download.opensuse.org/repositories/games/openSUSE_Tumbleweed/games.repo && \

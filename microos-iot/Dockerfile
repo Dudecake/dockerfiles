@@ -1,6 +1,6 @@
 ARG VERSION=latest
 
-FROM localhost.localdomain/opensuse-base:${VERSION}
+FROM localhost.localdomain/microos-base:${VERSION}
 
 RUN zypper install -y patterns-dudecake-hw-accel && \
     zypper clean -a
@@ -15,5 +15,5 @@ RUN zypper addrepo -fp120 https://download.opensuse.org/repositories/home:cloud-
 RUN zypper addrepo -fp120 https://download.opensuse.org/repositories/filesystems/openSUSE_Tumbleweed/filesystems.repo && \
     zypper addrepo -fp120 https://download.opensuse.org/repositories/server:monitoring/openSUSE_Tumbleweed/server:monitoring.repo && \
     zypper --gpg-auto-import-keys refresh && \
-    zypper install -y patterns-microos-cockpit patterns-dudecake-iot && \
+    zypper install -y kernel-longterm-devel patterns-microos-cockpit patterns-dudecake-iot && \
     zypper clean -a
